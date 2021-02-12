@@ -1,0 +1,54 @@
+1. crear entorno virtual
+
+python3.6 -m venv env
+source env/bin/activate
+
+2. dentro del entorno virtual instalar requirements.txt
+
+(env)$ pip install -r requirements.txt
+
+3. crear base de datos
+
+(env)$ psql
+# create database restaurantes_jwt;
+# \q
+
+4. crear las tablas en la base de datos
+
+(env)$ python manage.py create_db
+(env)$ python manage.py db init
+(env)$ python manage.py db migrate
+
+5. verificar que se crearon las tablas
+
+(env)$ psql
+# \c restaurantes_jwt
+# \d
+
+6. correr aplicacion
+
+(env)$ python manage.py run_app
+
+7. abrir postman, crear nueva collection y nuevo request
+
+8. en el request, en authorization hacer:
+	type = Bearer token
+	token = {{auth_token}}
+
+9. en el request en test añadir el siguiente codigo
+
+let jsonData = pm.response.json();
+if (jsonData.auth_token) {
+    let token = jsonData.auth_token;
+    pm.environment.set('auth_token', token);
+}
+
+10. en la parte superior derecha click en el icono como ojo y se añade un nuevo environment
+
+	nombre del environment = flask
+	variable = auth_token
+
+11. alado del icono del ojo cambiar de No environment a flask
+
+12. empezar a hacer las pruebas :)
+
